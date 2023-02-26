@@ -11,6 +11,15 @@
 , stdenv
 , darwin
 , makeWrapper
+# build options
+, withStreaming ? true
+, withDaemon ? true
+, withAudioBackend ? "rodio"
+, withMediaControl ? true
+, withLyrics ? true
+, withImage ? true
+, withNotify ? true
+, withSixel ? true
 }:
 
 rustPlatform.buildRustPackage rec {
@@ -38,6 +47,7 @@ rustPlatform.buildRustPackage rec {
     openssl
     dbus
     fontconfig
+  ] ++ lib.optionals withSixel [
     libsixel
   ] ++ lib.optionals stdenv.isLinux [
     alsa-lib
@@ -51,29 +61,28 @@ rustPlatform.buildRustPackage rec {
 
   buildNoDefaultFeatures = true;
 
-  buildFeatures = [
-    "rodio-backend"
-    "media-control"
-    "image"
-    "lyric-finder"
-    "daemon"
-    "notify"
-    "streaming"
-    "sixel"
-  ];
+  buildFeatures = [ ]
+    ++ lib.optionals (withAudioBackend != "") [ "${withAudioBackend}-backend" ]
+    ++ lib.optionals withMediaControl [ "media-control" ]
+    ++ lib.optionals withImage [ "image" ]
+    ++ lib.optionals withLyrics [ "lyric-finder" ]
+    ++ lib.optionals withDaemon [ "daemon" ]
+    ++ lib.optionals withNotify [ "notify" ]
+    ++ lib.optionals withStreaming [ "streaming" ]
+    ++ lib.optionals withSixel [ "sixel" ];
 
   # sixel-sys is dynamically linked to libsixel
-  postInstall = lib.optional stdenv.isDarwin ''
+  postInstall = lib.optional (stdenv.isDarwin && withSixel) ''
     wrapProgram $out/bin/spotify_player \
       --prefix DYLD_LIBRARY_PATH : "${lib.makeLibraryPath [libsixel]}"
   '';
 
   meta = with lib; {
-    description = "A command driven spotify player";
+    description = "A fast, easy to use, and configurable terminal music player";
     homepage = "https://github.com/aome510/spotify-player";
     changelog = "https://github.com/aome510/spotify-player/releases/tag/v${version}";
     mainProgram = "spotify_player";
     license = licenses.mit;
-    maintainers = with maintainers; [ dit7ya ];
+    maintainers = with maintainers; [ dit7ya xyven1 ];
   };
 }
