@@ -8,6 +8,9 @@
 , dbus
 , fontconfig
 , libsixel
+, stdenv
+, darwin
+, makeWrapper
 }:
 
 rustPlatform.buildRustPackage rec {
@@ -26,15 +29,25 @@ rustPlatform.buildRustPackage rec {
   nativeBuildInputs = [
     pkg-config
     cmake
+    rustPlatform.bindgenHook
+  ] ++ lib.optional stdenv.isDarwin [
+    makeWrapper
   ];
 
   buildInputs = [
     openssl
-    alsa-lib
     dbus
     fontconfig
     libsixel
-  ];
+  ] ++ lib.optionals stdenv.isLinux [
+    alsa-lib
+  ] ++ lib.optionals stdenv.isDarwin
+    (with darwin.apple_sdk.frameworks; [
+      MediaPlayer
+      AppKit
+      AudioUnit
+      Cocoa
+    ]);
 
   buildNoDefaultFeatures = true;
 
@@ -48,6 +61,12 @@ rustPlatform.buildRustPackage rec {
     "streaming"
     "sixel"
   ];
+
+  # sixel-sys is dynamically linked to libsixel
+  postInstall = lib.optional stdenv.isDarwin ''
+    wrapProgram $out/bin/spotify_player \
+      --prefix DYLD_LIBRARY_PATH : "${lib.makeLibraryPath [libsixel]}"
+  '';
 
   meta = with lib; {
     description = "A command driven spotify player";
