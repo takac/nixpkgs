@@ -57,6 +57,7 @@ rustPlatform.buildRustPackage rec {
       AppKit
       AudioUnit
       Cocoa
+      Foundation
     ]);
 
   buildNoDefaultFeatures = true;
