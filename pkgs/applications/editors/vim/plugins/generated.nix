@@ -7547,14 +7547,14 @@ final: prev:
 
   nvim-treesitter = buildVimPluginFrom2Nix {
     pname = "nvim-treesitter";
-    version = "2023-09-13";
+    version = "2023-09-14";
     src = fetchFromGitHub {
-      owner = "nvim-treesitter";
+      owner = "takac";
       repo = "nvim-treesitter";
-      rev = "9ab4e9cc8989e3811b14897cd0eb21ae35e5541e";
-      sha256 = "1jd3wylb9ibd0pylpmpzhir9290qmmx5gradqxd5vvarr5wvpzak";
+      rev = "eb051391a8d30c4d47493f2e41318b9770c2345f";
+      sha256 = "0yva6lhrb9hlfywn16h75rqp3sbiqi1fal1ysaw2cffm39rnm3jp";
     };
-    meta.homepage = "https://github.com/nvim-treesitter/nvim-treesitter/";
+    meta.homepage = "https://github.com/takac/nvim-treesitter/";
   };
 
   nvim-treesitter-context = buildVimPluginFrom2Nix {
