@@ -1319,6 +1319,19 @@
     };
     meta.homepage = "https://github.com/nvim-neorg/tree-sitter-norg";
   };
+
+  nu = buildGrammar {
+    language = "nu";
+    version = "0.0.0+rev=1a30509";
+    src = fetchFromGitHub {
+      owner = "LhKipp";
+      repo = "tree-sitter-nu";
+      rev = "1a305093569632de50f9a316ff843dcda25b4ef5";
+      hash = "sha256-dfdykz5DnbuJvRdY3rYehzphIJgDl1efrsEgG2+BhvI=";
+    };
+    meta.homepage = "https://github.com/nvim-neorg/tree-sitter-norg";
+  };
+
   objc = buildGrammar {
     language = "objc";
     version = "0.0.0+rev=62e61b6";
