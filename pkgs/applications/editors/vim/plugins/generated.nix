@@ -12623,6 +12623,19 @@ final: prev:
     meta.hydraPlatforms = [ ];
   };
 
+  scratch-nvim = buildVimPlugin {
+    pname = "scratch.nvim";
+    version = "2024-11-13";
+    src = fetchFromGitHub {
+      owner = "LintaoAmons";
+      repo = "scratch.nvim";
+      rev = "0e3ee1fe64023efe9459a361401a48017d34349e";
+      sha256 = "133p93s1crwx24l13a9q0hnpr8njpcxbnjvqyb7k565q9h7wi0v1";
+    };
+    meta.homepage = "https://github.com/LintaoAmons/scratch.nvim/";
+    meta.hydraPlatforms = [ ];
+  };
+
   scretch-nvim = buildVimPlugin {
     pname = "scretch.nvim";
     version = "2025-02-05";

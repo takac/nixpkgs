@@ -2924,6 +2924,12 @@ in
     dependencies = [ self.plenary-nvim ];
   };
 
+  scratch-nvim = super.scratch-nvim.overrideAttrs {
+    nvimSkipModule = [
+      "scratch.telescope_actions"
+    ];
+  };
+
   scretch-nvim = super.scretch-nvim.overrideAttrs {
   };
 
