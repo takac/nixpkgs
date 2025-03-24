@@ -476,6 +476,10 @@ let
       orga = "uncenter";
       repo = "tree-sitter-tera";
     };
+    "tree-sitter-go-template" = {
+      orga = "ngalaiko";
+      repo = "tree-sitter-go-template";
+    };
   };
 
   allGrammars =
