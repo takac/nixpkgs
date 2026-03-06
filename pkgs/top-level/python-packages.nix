@@ -14135,7 +14135,11 @@ self: super: with self; {
 
   pymfy = callPackage ../development/python-modules/pymfy { };
 
+  pymicro-features = callPackage ../development/python-modules/pymicro-features { };
+
   pymicro-vad = callPackage ../development/python-modules/pymicro-vad { };
+
+  pymicro-wakeword = callPackage ../development/python-modules/pymicro-wakeword { };
 
   pymicrobot = callPackage ../development/python-modules/pymicrobot { };
 
